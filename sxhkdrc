@@ -1,0 +1,215 @@
+# vi:ft=bash
+
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + Return
+	alacritty
+
+# terminal emulator 2
+super + shift + Return
+	kitty
+
+# browser
+super + b
+	brave
+
+# file manager
+super + f
+	nemo
+
+# start emacs client
+super + e
+	emacsclient -c
+
+# restart emacs
+super + shift + e
+	$HOME/.local/bin/restartemacs.sh
+
+# program launcher
+super + d
+	$HOME/.config/rofi/launchers/misc/launcher.sh
+
+# toggle polybar
+super + shift + b
+	$HOME/.config/bspwm/togglepolybar.sh {hide, show}
+
+# start screenshooter
+super + Print
+	xfce4-screenshooter
+
+# change keyboard
+super + @space
+	$HOME/.local/bin/switchkb.sh
+
+# make sxhkd reload its configuration files:
+super + alt + c
+	pkill -USR1 -x sxhkd
+
+# show sxhkd keybinds
+super + shift + slash
+	$HOME/.local/bin/sxhkd-help
+
+#
+# bspwm hotkeys
+#
+
+# quit bspwm
+super + alt + e
+	cinnamon-session-quit
+
+# restart bspwm
+super + alt + r
+	bspc wm -r
+
+# close and kill
+super + {shift + q, ctrl + q}
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + alt + m
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+super + y
+	bspc node newest.marked.local -n newest.!automatic.local
+
+# Move current window to a pre-selected space
+super + shift + m
+	bspc node -n last.!automatic
+
+# swap the current node and the biggest window
+# super + g
+# 	bspc node -s biggest.window
+
+#
+# state/flags
+#
+
+# set the window state
+super + shift + t
+	bspc node -t tiled || bspc node -t pseudo_tiled
+
+# super + alt + m
+# 	bspc node -t fullscreen
+
+# toggle floating
+super + shift + @space
+	bspc node -t floating || bspc node -t tiled
+# 	bspc node -t '~{floating,tiled}'
+
+# toggle fullscreen
+super + shift + f
+	(bspc node -t fullscreen && $HOME/.config/bspwm/togglepolybar.sh hide) || (bspc node -t tiled && $HOME/.config/bspwm/togglepolybar.sh show)
+#	bspc node -t '~{fullscreen,tiled}'
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+#
+# focus/swap
+#
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus the node for the given path jump
+# super + {p,b,comma,period}
+# 	bspc node -f @{parent,brother,first,second}
+
+# focus the node for the given path jump
+super + {p,comma,period}
+	bspc node -f @{parent,first,second}
+
+# focus the next/previous window in the current desktop
+super + {_,shift + }c
+	bspc node -f {next,prev}.local.!hidden.window
+
+# focus the next/previous desktop in the current monitor
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# focus the last node/desktop
+super + {grave,Tab}
+	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '{1-9,10}'
+
+# push to scratchpad
+super + {shift + minus,minus}
+	$HOME/.local/bin/{bspc-hide,bspc-show}
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + ctrl + shift + {h,j,k,l}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# balance nodes
+super + {_,shift +} + @equal
+	bspc node {@/,@parent} {--equalize,--balance}
+
+# Rotate tree
+super + {a,shift + a}
+	bspc node @/ -C {forward,backward}
+
+#
+# tabs
+#
+
+# add to tabbed container
+super + ctrl + alt + {h,j,k,l}
+	tabc attach $(bspc query -N -n) {$(bspc query -N -n west),$(bspc query -N -n south),$(bspc query -N -n north),$(bspc query -N -n east)}
+
+# create/remove from tabbed container
+super + z
+	id=$(bspc query -N -n); \
+	[[ "$(tabc printclass $id)" == "tabbed" ]] \
+	&& tabc detach $id \
+	|| tabc create $id
+
+# toggle autoattach in tabbed container
+super + shift + z
+	tabc autoattach $(bspc query -N -n)
