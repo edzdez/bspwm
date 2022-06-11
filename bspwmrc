@@ -11,7 +11,7 @@ pgrep -x kdeconnectd > /dev/null || kdeconnectd &
 pgrep -x kdeconnect-indi > /dev/null || kdeconnect-indicator &
 pgrep -x polybar > /dev/null || $HOME/.config/bspwm/launch_ewmh.sh
 # pgrep -x bspswallow > /dev/null || $HOME/.local/bin/bspswallow &
-pgrep -f power-profiles-applet > /dev/null || power-profiles-applet
+pgrep -f power-profiles-applet > /dev/null || power-profiles-applet &
 
 setxkbmap -option caps:escape
 wmname LG3D
