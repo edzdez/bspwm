@@ -30,7 +30,8 @@ super + shift + e
 
 # program launcher
 super + d
-	$HOME/.config/rofi/launchers/misc/launcher.sh
+#	$HOME/.config/rofi/launchers/misc/launcher.sh
+	j4-dmenu-desktop -term=alacritty --no-generic --dmenu='dmenu -b -l 20 -p "Run:"'
 
 # toggle polybar
 super + shift + b
