@@ -9,12 +9,12 @@ super + Return
 	alacritty
 
 # terminal emulator 2
-super + shift + Return
-	kitty
+# super + shift + Return
+#	kitty
 
 # browser
 super + b
-	brave
+	brave-browser
 
 # file manager
 super + f
