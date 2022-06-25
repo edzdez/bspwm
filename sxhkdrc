@@ -4,6 +4,14 @@
 # wm independent hotkeys
 #
 
+# volume control
+{XF86AudioMute,XF86AudioLowerVolume,XF86AudioRaiseVolume}
+	pamixer {-t,-d 5,-i 5} & $HOME/.local/bin/notify-volume.sh
+
+# brighness control
+{XF86MonBrightnessDown,XF86MonBrightnessUp}
+	brightnessctl s {5%-,+5%} & $HOME/.local/bin/notify-backlight.sh
+
 # terminal emulator
 super + Return
 	alacritty
@@ -35,15 +43,15 @@ super + d
 
 # toggle polybar
 super + shift + b
-	$HOME/.config/bspwm/togglepolybar.sh {hide, show}
+	$HOME/.local/bin/togglepolybar.sh {hide, show}
 
 # start screenshooter
 super + Print
 	xfce4-screenshooter
 
 # change keyboard
-super + @space
-	$HOME/.local/bin/switchkb.sh
+# super + @space
+# 	$HOME/.local/bin/switchkb.sh
 
 # make sxhkd reload its configuration files:
 super + alt + c
@@ -102,8 +110,9 @@ super + shift + @space
 # 	bspc node -t '~{floating,tiled}'
 
 # toggle fullscreen
-super + shift + f
-	(bspc node -t fullscreen && $HOME/.config/bspwm/togglepolybar.sh hide) || (bspc node -t tiled && $HOME/.config/bspwm/togglepolybar.sh show)
+super + alt + f
+	$HOME/.local/bin/bspc-fullscreen.sh "on" || $HOME/.local/bin/bspc-fullscreen.sh "off"
+#	(bspc node -t fullscreen && $HOME/.local/bin/togglepolybar.sh hide) || (bspc node -t tiled && $HOME/.local/bin/togglepolybar.sh show)
 #	bspc node -t '~{fullscreen,tiled}'
 
 # set the node flags
