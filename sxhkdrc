@@ -6,11 +6,11 @@
 
 # volume control
 {XF86AudioMute,XF86AudioLowerVolume,XF86AudioRaiseVolume}
-	pamixer {-t,-d 5,-i 5} & $HOME/.local/bin/notify-volume.sh
+	pamixer {-t,-d 5,-i 5} && $HOME/.local/bin/notify-volume.sh
 
 # brighness control
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
-	brightnessctl s {5%-,+5%} & $HOME/.local/bin/notify-backlight.sh
+	brightnessctl s {5%-,+5%} && $HOME/.local/bin/notify-backlight.sh
 
 # terminal emulator
 super + Return
@@ -159,8 +159,12 @@ super + {o,i}
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '{1-9,10}'
+super + {_,shift + }{1-9}
+	bspc {desktop -f,node -d} '{1-9}'
+
+# second monitor focus or send to the given desktop
+super + {_,shift + }{F1,F2,F3,F4,F5,F6,F7,F8,F9}
+	bspc {desktop -f,node -d} '{11,12,13,14,15,16,17,18,19}'
 
 # push to scratchpad
 super + {shift + minus,minus}
@@ -220,10 +224,7 @@ super + ctrl + alt + {h,j,k,l}
 
 # create/remove from tabbed container
 super + z
-	id=$(bspc query -N -n); \
-	[[ "$(tabc printclass $id)" == "tabbed" ]] \
-	&& tabc detach $id \
-	|| tabc create $id
+	/home/ethan/.local/bin/addremovefromtabbed.sh
 
 # toggle autoattach in tabbed container
 super + shift + z

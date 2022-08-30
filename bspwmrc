@@ -20,8 +20,8 @@ wmname LG3D
 if [ $(xrandr | grep -sw 'connected' | wc -l) = 2 ]
 then
     bspc wm --reorder-monitors DP-1 eDP-1
-    bspc monitor eDP-1 -d 6 7 8 9
-    bspc monitor DP-1 -d 1 2 3 4 5
+    bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
+    bspc monitor DP-1 -d 11 12 13 14 15 16 17 18 19
 else
     bspc monitor DP-1 --remove
     bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9
@@ -42,13 +42,17 @@ bspc config pointer_follows_focus  false
 # bspc config active_border_color    "#2e3440"
 # bspc config focused_border_color   "#5e81ac"
 # bspc config presel_feedback_color  "#88c0d0"
-bspc config normal_border_color    "#1e1e2e"
-bspc config active_border_color    "#1e1e2e"
+# bspc config normal_border_color    "#1e1e2e"
+# bspc config active_border_color    "#1e1e2e"
+bspc config normal_border_color    "#1d1f21"
+bspc config active_border_color    "#1d1f21"
 # bspc config focused_border_color   "#82aaff"
 # bspc config focused_border_color   "#89ddff"
 # bspc config presel_feedback_color  "#89ddff"
-bspc config focused_border_color   "#89dceb"
-bspc config presel_feedback_color  "#89dceb"
+# bspc config focused_border_color   "#89dceb"
+# bspc config presel_feedback_color  "#89dceb"
+bspc config focused_border_color   "#81a2be"
+bspc config presel_feedback_color  "#81a2be"
 # bspc config ignore_ewmh_focus      true
 
 bspc rule -a Emacs state=tiled
@@ -57,3 +61,8 @@ bspc rule -a zoom state=floating
 bspc rule -a QjackCtl state=floating
 bspc rule -a slm state=floating
 bspc rule -a Postman state=floating
+bspc rule -a Picket state=floating
+
+# temp
+bspc rule -a Raymarcher state=floating
+
