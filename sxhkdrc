@@ -67,7 +67,7 @@ super + shift + slash
 
 # quit bspwm
 super + alt + e
-	cinnamon-session-quit
+	cinnamon-session-quit & gnome-session-quit
 
 # restart bspwm
 super + alt + r
