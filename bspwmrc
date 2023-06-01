@@ -64,6 +64,7 @@ bspc rule -a QjackCtl state=floating
 bspc rule -a slm state=floating
 bspc rule -a Postman state=floating
 bspc rule -a Picket state=floating
+bspc rule -a Zathura state=tiled
 
 # temp
 bspc rule -a Raymarcher state=floating
